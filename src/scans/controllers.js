@@ -28,11 +28,13 @@ module.exports={
 function scanProducts(client,payload){
     return new Promise((resolve,reject)=>{
         let sql="";
+        let  sql2=""
         payload.productIds.map(entry=>{
-            sql+=`update products set status='scanned',gis='${JSON.stringify(entry.gis)}' where product_id='${entry.id}' and status!='scanned'; `;
-        })
-        //let sql=`update products set status='scanned'  where  product_id=any($1) and status!='scanned'`;
-      pg.query(client,sql,[],(err,res)=>{
+          //  sql+=`update products set status='scanned',gis='${JSON.stringify(entry.gis)}' where product_id='${entry.id}' and status!='scanned'; `;
+            sql2+=`update products  set gis='${JSON.stringify(entry.gis)}',status =(case when status='notscanned' then 'scanned' else 'already scanned' END)
+             where product_id='${entry.id}';`;
+          });
+      pg.query(client,sql2,[],(err,res)=>{
           if(err){
             return reject({
                 statusCode:500,

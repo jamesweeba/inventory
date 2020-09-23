@@ -17,7 +17,6 @@ function scanProduct(req,res){
 }
 
 
-
 module.exports={
     scanProduct
 }

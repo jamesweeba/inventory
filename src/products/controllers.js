@@ -18,29 +18,6 @@ module.exports={
         });     
      })
     },
-
-    checkProduct:function(client,payload){
-        return new Promise((resolve,reject)=>{
-            scanProducts(client,payload).then(results=>{
-                return fetchProductsAfterScan(client,payload);
-            }).then(results=>{
-                if(results.length==0){
-                    return reject({
-                        statusCode:404,
-                        message:"Not found"
-                    })
-                }
-                return resolve(results);
-             }).catch(err=>{
-             return reject({
-                 statusCode:500,
-                 message:"Internal server error"
-             })
-            })
-        })
-    },
-
-
     getProducts:function(client,payload){
         return new Promise((resolve,reject)=>{
             paginateProducts(client,payload).then(count=>{
@@ -128,53 +105,6 @@ function getallProducts(client,payload){
         })
     })
 }
-
-
-function scanProducts(client,payload){
-    return new Promise((resolve,reject)=>{
-        let sql=`update products set status='scanned'  where  product_id=any($1) and status!='scanned'`;
-      pg.query(client,sql,[payload.productIds],(err,res)=>{
-          if(err){
-            return reject({
-                statusCode:500,
-                message:"Internal server error"
-            })
-          }
-             return resolve("updated");
-      })
-
-    })
-}
-
-function fetchProductsAfterScan(client,payload){
-    return new Promise((resolve,reject)=>{
-        let sql=`select status,product_id from products where product_id =any($1)`;
-        pg.query(client,sql,[payload.productIds],(err,res)=>{
-            if(err){
-                return reject({
-                    statusCode:500,
-                    message:"Internal server error"
-                })
-            }
-            return resolve(res.rows);
-        })
-
-
-    })
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //books_author
 

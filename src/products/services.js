@@ -21,18 +21,6 @@ const api=require("../api/commons");
 }
 
 
-function scanProduct(req,res){
-    pg.connect().then(client=>{
-        let  payload=req.body;
-          controller.checkProduct(client,payload).then(bookResults=>{
-              api.success({statusCode:200,message:"OK",data:bookResults},client,res);
-          }).catch(err=>{
-              api.processError(err,client,res);
-              });
-      }).catch(err=>{
-              api.processError(err,client,res);
-      })
-}
 
 
 function getProducts(req,res){
@@ -50,6 +38,5 @@ function getProducts(req,res){
 
 module.exports={
     creatProducts,
-    scanProduct,
     getProducts
 }
