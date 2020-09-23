@@ -5,7 +5,7 @@ module.exports={
      return new Promise((resolve,reject)=>{
          let sql="";
          (payload.products||[]).map(entry=>{
-             sql+=`insert into products(product_id,item,code,description,size,weight,expiry_date,company) values('${entry.product_id}','${entry.item}','${entry.code}','${entry.description}','${entry.size}','${entry.weight}','${entry.expiryDate}','${entry.company}')  on conflict(product_id)  do nothing;`;
+             sql+=`insert into products(product_id,item,code,description,company) values('${entry.id}','${entry.item}','${entry.code}','${entry.description}','${entry.company}')  on conflict(product_id)  do nothing;`;
           })
          pg.query(client,sql,[],(err,res)=>{
             if(err){
@@ -18,7 +18,6 @@ module.exports={
         });     
      })
     },
-
 
     checkProduct:function(client,payload){
         return new Promise((resolve,reject)=>{

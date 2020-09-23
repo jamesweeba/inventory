@@ -3,7 +3,8 @@ const pg=require("../src/utils/databases");
 const express=require("express");
 const app=express();
 const products=require("./products/routes");
-//const users=require("./users/routes");
+
+const scans=require("./scans/routes")
 const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
 const cors = require("cors");
@@ -17,7 +18,7 @@ pg.init(db="local");
 
 
 app.use("/api/v1/products",products);
-//app.use("/api/v1/auth",users);
+app.use("/api/v1/scans",scans);
 
 app.listen(port,()=>{
     console.log("Magic happens on port"+ port);

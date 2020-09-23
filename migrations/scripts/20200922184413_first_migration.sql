@@ -23,14 +23,10 @@ CREATE TABLE products(
  item varchar NOT NULL,
  code  varchar NOT NULL,
  description varchar NOT NULL,
- size VARCHAR NOT NULL,
- expiry_date TIMESTAMPTZ ,
- weight VARCHAR NOT NULL,
  company varchar not null,
  status varchar  default 'notscanned',
+ gis json,
  posted_ts timestamptz default CURRENT_DATE
- 
-
 );
  
 CREATE INDEX ON products(product_id);

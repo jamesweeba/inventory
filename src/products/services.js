@@ -21,7 +21,7 @@ const api=require("../api/commons");
 }
 
 
-function checkProduct(req,res){
+function scanProduct(req,res){
     pg.connect().then(client=>{
         let  payload=req.body;
           controller.checkProduct(client,payload).then(bookResults=>{
@@ -50,6 +50,6 @@ function getProducts(req,res){
 
 module.exports={
     creatProducts,
-    checkProduct,
+    scanProduct,
     getProducts
 }
