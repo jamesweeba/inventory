@@ -21,7 +21,11 @@ const api=require("../api/commons");
 }
 
 
-
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
 
 function getProducts(req,res){
     pg.connect().then(client=>{
